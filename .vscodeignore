@@ -1,0 +1,26 @@
+# Development files
+.vscode/**
+.vscode-test/**
+test/**
+.gitignore
+.yarnrc
+vsc-extension-quickstart.md
+**/jsconfig.json
+**/*.map
+**/eslint.config.mjs
+**/.vscode-test.*
+
+# Documentation files
+**/*.md
+!README.md
+!CHANGELOG.md
+!LICENSE.md
+
+# Development dependencies
+node_modules/**
+.env*
+**/.DS_Store
+**/*.log
+
+# Build artifacts
+**/*.vsix
