@@ -231,6 +231,159 @@ class CodeLynxHandlers {
             { id: 'llama-3.3-70b', name: 'Llama 3.3 70B', description: 'Latest Llama model' }
         ];
     }
+
+    async generateTests(panel, codeContent, fileName, testType) {
+        try {
+            const apiKey = this.getApiKey();
+            if (!apiKey) {
+                panel.webview.postMessage({
+                    command: 'testGenerationResponse',
+                    status: 'error',
+                    message: 'Please configure your Cerebras API key first'
+                });
+                return;
+            }
+
+            const client = this.createCerebrasClient();
+            const config = vscode.workspace.getConfiguration('codelynx');
+            const model = config.get('chatModel', 'llama3.1-8b');
+
+            let systemPrompt = '';
+            let userPrompt = '';
+
+            switch (testType) {
+                case 'unit':
+                    systemPrompt = 'You are an expert software engineer specializing in writing comprehensive unit tests. Generate complete, well-documented unit tests that cover edge cases, error handling, and various scenarios.';
+                    userPrompt = `Generate comprehensive unit tests for the following code from file "${fileName}":\n\n${codeContent}\n\nProvide complete test code with proper assertions, mocking where necessary, and test all important functions and edge cases.`;
+                    break;
+                case 'integration':
+                    systemPrompt = 'You are an expert software engineer specializing in writing integration tests. Generate tests that verify how different parts of the system work together.';
+                    userPrompt = `Generate integration tests for the following code from file "${fileName}":\n\n${codeContent}\n\nFocus on testing interactions between components, API calls, database operations, and end-to-end workflows.`;
+                    break;
+                case 'security':
+                    systemPrompt = 'You are a cybersecurity expert specializing in writing security tests. Generate tests that verify security measures and identify potential vulnerabilities.';
+                    userPrompt = `Generate security tests for the following code from file "${fileName}":\n\n${codeContent}\n\nFocus on testing input validation, authentication, authorization, SQL injection prevention, XSS protection, and other security concerns.`;
+                    break;
+                default:
+                    throw new Error('Invalid test type');
+            }
+
+            this.log(`Generating ${testType} tests for ${fileName}`, 'info');
+
+            const response = await client.chat.completions.create({
+                model: model,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: userPrompt }
+                ],
+                max_tokens: 3000,
+                temperature: 0.3,
+                stream: false
+            });
+
+            const testCode = response.choices[0]?.message?.content || 'Sorry, I could not generate tests.';
+
+            panel.webview.postMessage({
+                command: 'testGenerationResponse',
+                status: 'success',
+                testType: testType,
+                testCode: testCode,
+                fileName: fileName
+            });
+
+            this.log(`${testType} tests generated successfully`, 'info');
+
+        } catch (error) {
+            this.log(`Test generation error: ${error.message}`, 'error');
+            
+            panel.webview.postMessage({
+                command: 'testGenerationResponse',
+                status: 'error',
+                message: `An error occurred while generating ${testType} tests: ${error.message}`
+            });
+        }
+    }
+
+    async scanVulnerabilities(panel, codeContent, fileName) {
+        try {
+            const apiKey = this.getApiKey();
+            if (!apiKey) {
+                panel.webview.postMessage({
+                    command: 'vulnerabilityScanResponse',
+                    status: 'error',
+                    message: 'Please configure your Cerebras API key first'
+                });
+                return;
+            }
+
+            const client = this.createCerebrasClient();
+            const config = vscode.workspace.getConfiguration('codelynx');
+            const model = config.get('chatModel', 'llama3.1-8b');
+
+            const systemPrompt = `You are a cybersecurity expert specializing in code vulnerability analysis. Analyze code for security vulnerabilities and provide detailed reports with severity levels, descriptions, and recommendations for fixes.
+
+Return your analysis in the following JSON format:
+{
+    "vulnerabilities": [
+        {
+            "severity": "high|medium|low",
+            "type": "vulnerability type",
+            "line": "line number or range",
+            "description": "detailed description",
+            "recommendation": "how to fix it"
+        }
+    ],
+    "summary": "overall security assessment"
+}`;
+
+            const userPrompt = `Analyze the following code from file "${fileName}" for security vulnerabilities:\n\n${codeContent}\n\nLook for issues like:
+- SQL injection vulnerabilities
+- Cross-site scripting (XSS)
+- Authentication and authorization flaws
+- Input validation issues
+- Insecure data handling
+- Hardcoded secrets
+- Insecure cryptographic practices
+- Path traversal vulnerabilities
+- Command injection
+- And other common security issues
+
+Provide a detailed analysis with specific line references where possible.`;
+
+            this.log(`Scanning vulnerabilities for ${fileName}`, 'info');
+
+            const response = await client.chat.completions.create({
+                model: model,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: userPrompt }
+                ],
+                max_tokens: 2500,
+                temperature: 0.2,
+                stream: false
+            });
+
+            const scanResult = response.choices[0]?.message?.content || 'Sorry, I could not analyze the code for vulnerabilities.';
+
+            panel.webview.postMessage({
+                command: 'vulnerabilityScanResponse',
+                status: 'success',
+                scanResult: scanResult,
+                fileName: fileName
+            });
+
+            this.log('Vulnerability scan completed successfully', 'info');
+
+        } catch (error) {
+            this.log(`Vulnerability scan error: ${error.message}`, 'error');
+            
+            panel.webview.postMessage({
+                command: 'vulnerabilityScanResponse',
+                status: 'error',
+                message: `An error occurred while scanning for vulnerabilities: ${error.message}`
+            });
+        }
+    }
 }
 
 module.exports = CodeLynxHandlers;

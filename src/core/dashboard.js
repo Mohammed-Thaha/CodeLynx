@@ -84,6 +84,21 @@ class CodeLynxDashboard {
                     case 'readFile':
                         await this.readFileContent(message.fileName);
                         break;
+                    case 'generateTests':
+                        await this.handlers.generateTests(
+                            this._panel,
+                            message.codeContent,
+                            message.fileName,
+                            message.testType
+                        );
+                        break;
+                    case 'scanVulnerabilities':
+                        await this.handlers.scanVulnerabilities(
+                            this._panel,
+                            message.codeContent,
+                            message.fileName
+                        );
+                        break;
                 }
             },
             null,
@@ -298,6 +313,142 @@ class CodeLynxDashboard {
                     color: var(--vscode-input-foreground, var(--cerebras-text));
                     font-size: 12px;
                     font-weight: 500;
+                }
+
+                /* Feature Section */
+                .feature-section {
+                    padding: 20px 24px;
+                    background: var(--vscode-editor-background, var(--cerebras-surface));
+                    border-bottom: 1px solid var(--vscode-panel-border, var(--cerebras-border));
+                }
+
+                .feature-title {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: var(--vscode-editor-foreground, var(--cerebras-text));
+                    margin-bottom: 8px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .feature-description {
+                    color: var(--vscode-input-placeholderForeground, var(--cerebras-text-secondary));
+                    font-size: 14px;
+                    margin-bottom: 16px;
+                    line-height: 1.5;
+                }
+
+                .feature-buttons {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 12px;
+                }
+
+                .feature-btn {
+                    padding: 10px 16px;
+                    background: var(--vscode-button-background, var(--cerebras-surface));
+                    color: var(--vscode-button-foreground, var(--cerebras-text));
+                    border: 1px solid var(--cerebras-accent);
+                    border-radius: var(--cerebras-radius);
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: 500;
+                    transition: all 0.2s ease;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    text-decoration: none;
+                }
+
+                .feature-btn:hover {
+                    background: var(--cerebras-accent);
+                    color: white;
+                    transform: translateY(-1px);
+                }
+
+                .feature-btn:disabled {
+                    opacity: 0.6;
+                    cursor: not-allowed;
+                    transform: none;
+                }
+
+                .feature-btn.primary {
+                    background: var(--cerebras-accent);
+                    color: white;
+                }
+
+                .feature-btn.primary:hover {
+                    background: var(--cerebras-accent-hover);
+                }
+
+                .test-results {
+                    margin-top: 16px;
+                    padding: 16px;
+                    background: var(--vscode-input-background, var(--cerebras-surface));
+                    border: 1px solid var(--vscode-input-border, var(--cerebras-border));
+                    border-radius: var(--cerebras-radius);
+                    display: none;
+                }
+
+                .test-results.show {
+                    display: block;
+                }
+
+                .test-results-title {
+                    font-weight: 600;
+                    margin-bottom: 12px;
+                    color: var(--vscode-editor-foreground, var(--cerebras-text));
+                }
+
+                .test-code {
+                    background: var(--vscode-textCodeBlock-background, #1e1e1e);
+                    border: 1px solid var(--vscode-input-border, var(--cerebras-border));
+                    border-radius: 4px;
+                    padding: 12px;
+                    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                    font-size: 13px;
+                    color: var(--vscode-editor-foreground, var(--cerebras-text));
+                    white-space: pre-wrap;
+                    overflow-x: auto;
+                    max-height: 400px;
+                    overflow-y: auto;
+                }
+
+                .vulnerability-results {
+                    margin-top: 16px;
+                    padding: 16px;
+                    background: var(--vscode-input-background, var(--cerebras-surface));
+                    border: 1px solid var(--vscode-input-border, var(--cerebras-border));
+                    border-radius: var(--cerebras-radius);
+                    display: none;
+                }
+
+                .vulnerability-results.show {
+                    display: block;
+                }
+
+                .vulnerability-item {
+                    padding: 12px;
+                    margin: 8px 0;
+                    border-left: 4px solid;
+                    border-radius: 4px;
+                    background: var(--vscode-input-background, var(--cerebras-surface));
+                }
+
+                .vulnerability-item.high {
+                    border-left-color: var(--cerebras-error);
+                    background: rgba(255, 68, 68, 0.1);
+                }
+
+                .vulnerability-item.medium {
+                    border-left-color: var(--cerebras-warning);
+                    background: rgba(255, 184, 0, 0.1);
+                }
+
+                .vulnerability-item.low {
+                    border-left-color: var(--cerebras-success);
+                    background: rgba(0, 212, 170, 0.1);
                 }
 
                 /* File Selector */
@@ -800,6 +951,59 @@ class CodeLynxDashboard {
                     </div>
                 </div>
 
+                <!-- Test Generation & Vulnerability Scanner -->
+                <div class="feature-section">
+                    <div class="feature-title">
+                        <span>🛡️</span>
+                        <span>Automatic Test Generation & Vulnerability Scanner</span>
+                    </div>
+                    <div class="feature-description">
+                        Generates unit tests, integration tests, and security tests automatically for your project.
+                        Highlights potential vulnerabilities in your code.
+                        <strong>Unique because most AI code assistants focus only on writing code, not testing & security.</strong>
+                    </div>
+                    <div class="feature-buttons">
+                        <button class="feature-btn" id="generateUnitTestsBtn" disabled>
+                            <span>🧪</span>
+                            <span>Generate Unit Tests</span>
+                        </button>
+                        <button class="feature-btn" id="generateIntegrationTestsBtn" disabled>
+                            <span>🔗</span>
+                            <span>Generate Integration Tests</span>
+                        </button>
+                        <button class="feature-btn" id="generateSecurityTestsBtn" disabled>
+                            <span>🔐</span>
+                            <span>Generate Security Tests</span>
+                        </button>
+                        <button class="feature-btn primary" id="scanVulnerabilitiesBtn" disabled>
+                            <span>🔍</span>
+                            <span>Scan Vulnerabilities</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Test Results Display -->
+                    <div class="test-results" id="testResults">
+                        <div class="test-results-title" id="testResultsTitle">Generated Tests</div>
+                        <div class="test-code" id="testCode"></div>
+                        <div style="margin-top: 12px; display: flex; gap: 8px;">
+                            <button class="feature-btn" id="copyTestsBtn">
+                                <span>📋</span>
+                                <span>Copy Tests</span>
+                            </button>
+                            <button class="feature-btn" id="saveTestsBtn">
+                                <span>💾</span>
+                                <span>Save to File</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Vulnerability Results Display -->
+                    <div class="vulnerability-results" id="vulnerabilityResults">
+                        <div class="test-results-title">Security Vulnerability Scan Results</div>
+                        <div id="vulnerabilityList"></div>
+                    </div>
+                </div>
+
                 <!-- File Selector -->
                 <div class="file-selector">
                     <div class="file-selector-title">📁 Select a file to review and discuss:</div>
@@ -917,6 +1121,12 @@ class CodeLynxDashboard {
                             break;
                         case 'fileContent':
                             handleFileContent(message);
+                            break;
+                        case 'testGenerationResponse':
+                            handleTestGenerationResponse(message);
+                            break;
+                        case 'vulnerabilityScanResponse':
+                            handleVulnerabilityScanResponse(message);
                             break;
                     }
                 });
@@ -1069,6 +1279,12 @@ class CodeLynxDashboard {
 
                     fileContent = message.content;
                     addMessage('system', \`📁 Loaded \${message.fileName} (\${message.language}). You can now ask questions about this code or use the action buttons below.\`);
+                    
+                    // Enable feature buttons when file is loaded
+                    document.getElementById('generateUnitTestsBtn').disabled = false;
+                    document.getElementById('generateIntegrationTestsBtn').disabled = false;
+                    document.getElementById('generateSecurityTestsBtn').disabled = false;
+                    document.getElementById('scanVulnerabilitiesBtn').disabled = false;
                 }
 
                 function addMessage(type, content, isLoading = false) {
@@ -1126,6 +1342,132 @@ class CodeLynxDashboard {
                         }
                     } else {
                         addMessage('assistant', \` \${message.message}\`);
+                    }
+                }
+
+                function generateTests(testType) {
+                    if (!selectedFile || !fileContent) {
+                        addMessage('assistant', '❌ Please select a file first to generate tests.');
+                        return;
+                    }
+
+                    const button = document.getElementById(\`generate\${testType.charAt(0).toUpperCase() + testType.slice(1)}TestsBtn\`);
+                    button.disabled = true;
+                    button.innerHTML = '<span>⏳</span><span>Generating...</span>';
+
+                    addMessage('assistant', \`🧪 Generating \${testType} tests for \${selectedFile}...\`, true);
+
+                    vscode.postMessage({
+                        command: 'generateTests',
+                        codeContent: fileContent,
+                        fileName: selectedFile,
+                        testType: testType
+                    });
+                }
+
+                function scanVulnerabilities() {
+                    if (!selectedFile || !fileContent) {
+                        addMessage('assistant', '❌ Please select a file first to scan for vulnerabilities.');
+                        return;
+                    }
+
+                    const button = document.getElementById('scanVulnerabilitiesBtn');
+                    button.disabled = true;
+                    button.innerHTML = '<span>⏳</span><span>Scanning...</span>';
+
+                    addMessage('assistant', \`🔍 Scanning \${selectedFile} for security vulnerabilities...\`, true);
+
+                    vscode.postMessage({
+                        command: 'scanVulnerabilities',
+                        codeContent: fileContent,
+                        fileName: selectedFile
+                    });
+                }
+
+                function handleTestGenerationResponse(message) {
+                    const testType = message.testType;
+                    const button = document.getElementById(\`generate\${testType.charAt(0).toUpperCase() + testType.slice(1)}TestsBtn\`);
+                    
+                    button.disabled = false;
+                    button.innerHTML = \`<span>\${testType === 'unit' ? '🧪' : testType === 'integration' ? '🔗' : '🔐'}</span><span>Generate \${testType.charAt(0).toUpperCase() + testType.slice(1)} Tests</span>\`;
+
+                    const loadingMessage = document.getElementById('loadingMessage');
+                    if (loadingMessage) {
+                        loadingMessage.remove();
+                    }
+
+                    if (message.status === 'success') {
+                        const testResults = document.getElementById('testResults');
+                        const testResultsTitle = document.getElementById('testResultsTitle');
+                        const testCode = document.getElementById('testCode');
+
+                        testResultsTitle.textContent = \`Generated \${testType.charAt(0).toUpperCase() + testType.slice(1)} Tests\`;
+                        testCode.textContent = message.testCode;
+                        testResults.classList.add('show');
+
+                        addMessage('assistant', \`✅ \${testType.charAt(0).toUpperCase() + testType.slice(1)} tests generated successfully for \${message.fileName}!\`);
+                    } else {
+                        addMessage('assistant', \`❌ \${message.message}\`);
+                    }
+                }
+
+                function handleVulnerabilityScanResponse(message) {
+                    const button = document.getElementById('scanVulnerabilitiesBtn');
+                    button.disabled = false;
+                    button.innerHTML = '<span>🔍</span><span>Scan Vulnerabilities</span>';
+
+                    const loadingMessage = document.getElementById('loadingMessage');
+                    if (loadingMessage) {
+                        loadingMessage.remove();
+                    }
+
+                    if (message.status === 'success') {
+                        const vulnerabilityResults = document.getElementById('vulnerabilityResults');
+                        const vulnerabilityList = document.getElementById('vulnerabilityList');
+
+                        try {
+                            const scanData = JSON.parse(message.scanResult);
+                            let vulnerabilityHtml = '';
+
+                            if (scanData.vulnerabilities && scanData.vulnerabilities.length > 0) {
+                                scanData.vulnerabilities.forEach(vuln => {
+                                    vulnerabilityHtml += \`
+                                        <div class="vulnerability-item \${vuln.severity}">
+                                            <div style="font-weight: 600; margin-bottom: 4px;">
+                                                \${vuln.severity.toUpperCase()}: \${vuln.type}
+                                            </div>
+                                            <div style="margin-bottom: 8px;">
+                                                <strong>Line:</strong> \${vuln.line}
+                                            </div>
+                                            <div style="margin-bottom: 8px;">
+                                                \${vuln.description}
+                                            </div>
+                                            <div style="font-style: italic; color: var(--cerebras-text-secondary);">
+                                                <strong>Recommendation:</strong> \${vuln.recommendation}
+                                            </div>
+                                        </div>
+                                    \`;
+                                });
+
+                                vulnerabilityHtml += \`
+                                    <div style="margin-top: 16px; padding: 12px; background: var(--vscode-input-background); border-radius: 4px;">
+                                        <strong>Summary:</strong> \${scanData.summary}
+                                    </div>
+                                \`;
+                            } else {
+                                vulnerabilityHtml = '<div style="color: var(--cerebras-success); font-weight: 600;">✅ No security vulnerabilities detected!</div>';
+                            }
+
+                            vulnerabilityList.innerHTML = vulnerabilityHtml;
+                        } catch (e) {
+                            // If not JSON, display as plain text
+                            vulnerabilityList.innerHTML = \`<div style="white-space: pre-wrap;">\${message.scanResult}</div>\`;
+                        }
+
+                        vulnerabilityResults.classList.add('show');
+                        addMessage('assistant', \`🔍 Vulnerability scan completed for \${message.fileName}\`);
+                    } else {
+                        addMessage('assistant', \`❌ \${message.message}\`);
                     }
                 }
 
@@ -1233,6 +1575,63 @@ class CodeLynxDashboard {
 
                     modelSelector.addEventListener('change', (e) => {
                         currentModel = e.target.value;
+                    });
+
+                    // Test Generation and Vulnerability Scanner Event Listeners
+                    const generateUnitTestsBtn = document.getElementById('generateUnitTestsBtn');
+                    const generateIntegrationTestsBtn = document.getElementById('generateIntegrationTestsBtn');
+                    const generateSecurityTestsBtn = document.getElementById('generateSecurityTestsBtn');
+                    const scanVulnerabilitiesBtn = document.getElementById('scanVulnerabilitiesBtn');
+                    const copyTestsBtn = document.getElementById('copyTestsBtn');
+                    const saveTestsBtn = document.getElementById('saveTestsBtn');
+
+                    generateUnitTestsBtn.addEventListener('click', () => {
+                        if (selectedFile && fileContent) {
+                            generateTests('unit');
+                        }
+                    });
+
+                    generateIntegrationTestsBtn.addEventListener('click', () => {
+                        if (selectedFile && fileContent) {
+                            generateTests('integration');
+                        }
+                    });
+
+                    generateSecurityTestsBtn.addEventListener('click', () => {
+                        if (selectedFile && fileContent) {
+                            generateTests('security');
+                        }
+                    });
+
+                    scanVulnerabilitiesBtn.addEventListener('click', () => {
+                        if (selectedFile && fileContent) {
+                            scanVulnerabilities();
+                        }
+                    });
+
+                    copyTestsBtn.addEventListener('click', () => {
+                        const testCode = document.getElementById('testCode').textContent;
+                        navigator.clipboard.writeText(testCode).then(() => {
+                            copyTestsBtn.innerHTML = '<span>✅</span><span>Copied!</span>';
+                            setTimeout(() => {
+                                copyTestsBtn.innerHTML = '<span>📋</span><span>Copy Tests</span>';
+                            }, 2000);
+                        });
+                    });
+
+                    saveTestsBtn.addEventListener('click', () => {
+                        const testCode = document.getElementById('testCode').textContent;
+                        const testType = document.getElementById('testResultsTitle').textContent.toLowerCase().replace(' tests', '').replace('generated ', '');
+                        const fileName = selectedFile ? selectedFile.replace(/\\.[^/.]+$/, '') : 'test';
+                        const testFileName = \`\${fileName}.\${testType}.test.js\`;
+                        
+                        const blob = new Blob([testCode], { type: 'text/javascript' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = testFileName;
+                        a.click();
+                        URL.revokeObjectURL(url);
                     });
 
                     // Load files on click
