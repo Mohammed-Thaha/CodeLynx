@@ -176,8 +176,8 @@ class CodeLynxDashboard {
                     --cerebras-border: #333333;
                     --cerebras-text: #ffffff;
                     --cerebras-text-secondary: #a0a0a0;
-                    --cerebras-accent: #ff6b35;
-                    --cerebras-accent-hover: #ff7a47;
+                    --cerebras-accent: teal;
+                    --cerebras-accent-hover: #009688;
                     --cerebras-success: #00d4aa;
                     --cerebras-warning: #ffb800;
                     --cerebras-error: #ff4444;
