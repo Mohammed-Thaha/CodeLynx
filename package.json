@@ -19,7 +19,8 @@
     "cerebras"
   ],
   "activationEvents": [
-    "onCommand:codelynx.openChat"
+    "onCommand:codelynx.openChat",
+    "onCommand:codelynx.showApiUsage"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -27,6 +28,10 @@
       {
         "command": "codelynx.openChat",
         "title": "CodeLynx: Open AI Chat"
+      },
+      {
+        "command": "codelynx.showApiUsage",
+        "title": "CodeLynx: Show API Usage Statistics"
       }
     ],
     "configuration": {
@@ -69,11 +74,19 @@
           "markdownDescription": "Chat response creativity (0.0 = focused, 1.0 = creative)",
           "order": 4
         },
+        "codelynx.apiDailyLimit": {
+          "type": "number",
+          "default": 100,
+          "minimum": 1,
+          "maximum": 1000,
+          "markdownDescription": "Maximum number of API requests allowed per day",
+          "order": 5
+        },
         "codelynx.hasShownWelcome": {
           "type": "boolean",
           "default": false,
           "description": "Whether the welcome message has been shown",
-          "order": 5
+          "order": 6
         }
       }
     }
@@ -87,7 +100,7 @@
   },
   "icon": "icon.png",
   "repository": {
-    "type": "git", 
+    "type": "git",
     "url": "https://github.com/your-repo/codelynx"
   },
   "license": "MIT"
