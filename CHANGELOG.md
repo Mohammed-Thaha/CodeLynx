@@ -98,4 +98,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-**For more information, visit our [GitHub repository](https://github.com/your-repo/codelynx)**
+**For more information, visit our [GitHub repository](https://github.com/mohammed-thaha/codelynx)**

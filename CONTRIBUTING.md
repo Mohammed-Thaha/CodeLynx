@@ -13,7 +13,7 @@ Thank you for your interest in contributing to CodeLynx! This document provides 
 
 1. **Fork and Clone**
    ```bash
-   git clone https://github.com/your-username/CodeLynx.git
+   git clone https://github.com/mohammed-thaha/CodeLynx.git
    cd CodeLynx
    ```
 
