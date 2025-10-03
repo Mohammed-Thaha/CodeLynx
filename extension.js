@@ -1,39 +1,51 @@
 const vscode = require("vscode");
-const CodeLynxDashboard = require("./src/core/dashboard");
-const CodeLynxUsagePanel = require("./src/core/usage");
+const path = require("path");
+const fs = require("fs");
+
+// Import core components with better error handling
+let CodeLynxDashboard, CodeLynxUsagePanel;
+try {
+  CodeLynxDashboard = require("./src/core/dashboard");
+  CodeLynxUsagePanel = require("./src/core/usage");
+} catch (error) {
+  console.error("Failed to import core components:", error);
+  // We'll handle this in the activate function
+}
 
 let dashboard;
 let usagePanel;
+let globalContext;
 
 /**
- * Activates the CodeLynx extension
- * @param {vscode.ExtensionContext} context - Extension context
+ * Simple TreeDataProvider implementation for CodeLynx Explorer view
  */
-function activate(context) {
-  console.log("CodeLynx is now active!");
+class CodeLynxTreeDataProvider {
+  constructor() {
+    this._onDidChangeTreeData = new vscode.EventEmitter();
+    this.onDidChangeTreeData = this._onDidChangeTreeData.event;
+  }
 
-  // Initialize components
-  dashboard = new CodeLynxDashboard(context);
-  usagePanel = new CodeLynxUsagePanel(context);
+  getTreeItem(element) {
+    return element;
+  }
 
-  // Register commands
-  let chatCommand = vscode.commands.registerCommand("codelynx.openChat", () => {
-    dashboard.createOrShow();
-  });
+  getChildren() {
+    const chatItem = new vscode.TreeItem("Open AI Chat");
+    chatItem.command = {
+      command: "codelynx.openChat",
+      title: "Open AI Chat",
+    };
+    chatItem.iconPath = new vscode.ThemeIcon("comment-discussion");
 
-  let usageCommand = vscode.commands.registerCommand(
-    "codelynx.showApiUsage",
-    () => {
-      usagePanel.createOrShow();
-    }
-  );
+    const usageItem = new vscode.TreeItem("API Usage Statistics");
+    usageItem.command = {
+      command: "codelynx.showApiUsage",
+      title: "Show API Usage Statistics",
+    };
+    usageItem.iconPath = new vscode.ThemeIcon("graph");
 
-  // Add commands to subscriptions
-  context.subscriptions.push(chatCommand);
-  context.subscriptions.push(usageCommand);
-
-  // Initialize configuration
-  initializeConfiguration(context);
+    return [chatItem, usageItem];
+  }
 }
 
 /**
@@ -67,6 +79,89 @@ function initializeConfiguration(context) {
  */
 function deactivate() {
   // Clean up resources if needed
+  console.log("CodeLynx deactivated");
 }
 
-module.exports = { activate, deactivate };
+// Export activate and deactivate functions directly
+// This avoids potential circular reference and activation issues
+module.exports = {
+  activate(context) {
+    globalContext = context;
+    try {
+      console.log("CodeLynx is being activated...");
+
+      // Initialize components with explicit error logging
+      try {
+        dashboard = new CodeLynxDashboard(context);
+        usagePanel = new CodeLynxUsagePanel(context);
+        console.log("CodeLynx components initialized successfully");
+      } catch (error) {
+        console.error("Error initializing CodeLynx components:", error);
+        vscode.window.showErrorMessage(
+          `CodeLynx initialization error: ${error.message}`
+        );
+      }
+
+      // Register tree view for explorer
+      const treeDataProvider = new CodeLynxTreeDataProvider();
+      const treeView = vscode.window.createTreeView("codelynxExplorer", {
+        treeDataProvider,
+        showCollapseAll: false,
+      });
+      context.subscriptions.push(treeView);
+
+      // Register commands
+      let chatCommand = vscode.commands.registerCommand(
+        "codelynx.openChat",
+        () => {
+          try {
+            dashboard.createOrShow();
+          } catch (error) {
+            console.error("Error opening chat:", error);
+            vscode.window.showErrorMessage(
+              `Error opening chat: ${error.message}`
+            );
+          }
+        }
+      );
+
+      let usageCommand = vscode.commands.registerCommand(
+        "codelynx.showApiUsage",
+        () => {
+          try {
+            if (!usagePanel) {
+              console.log("Reinitializing usage panel");
+              usagePanel = new CodeLynxUsagePanel(context);
+            }
+            usagePanel.createOrShow();
+          } catch (error) {
+            console.error("Error showing API usage panel:", error);
+            vscode.window.showErrorMessage(
+              `Error showing API usage: ${error.message}`
+            );
+          }
+        }
+      );
+
+      // Add commands to subscriptions
+      context.subscriptions.push(chatCommand);
+      context.subscriptions.push(usageCommand);
+
+      // Initialize configuration
+      initializeConfiguration(context);
+
+      // Show success notification
+      vscode.window.setStatusBarMessage(
+        "CodeLynx activated successfully",
+        3000
+      );
+      console.log("CodeLynx activation completed successfully");
+    } catch (error) {
+      console.error("Critical error during CodeLynx activation:", error);
+      vscode.window.showErrorMessage(
+        `Critical error during CodeLynx activation: ${error.message}`
+      );
+    }
+  },
+  deactivate,
+};

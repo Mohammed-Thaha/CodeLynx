@@ -3,13 +3,13 @@
 # Development files
 .vscode/**
 .vscode-test/**
-src/**/*.test.js
 test/**
 **/*.test.js
 **/*.spec.js
 
+# IMPORTANT: Do NOT exclude src/** as it contains core extension components
+
 # Build artifacts
-node_modules/**
 out/test/**
 .nyc_output/**
 coverage/**

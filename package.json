@@ -3,7 +3,7 @@
   "displayName": "CodeLynx - AI Code Assistant",
   "publisher": "Codelynx",
   "description": "AI-powered code review, explanation, and assistance. Chat with AI about your codebase.",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -19,8 +19,10 @@
     "cerebras"
   ],
   "activationEvents": [
+    "onStartupFinished",
     "onCommand:codelynx.openChat",
-    "onCommand:codelynx.showApiUsage"
+    "onCommand:codelynx.showApiUsage",
+    "onView:codelynxExplorer"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -34,6 +36,48 @@
         "title": "CodeLynx: Show API Usage Statistics"
       }
     ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "codelynx.openChat",
+          "when": "true"
+        },
+        {
+          "command": "codelynx.showApiUsage",
+          "when": "true"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "codelynx.openChat",
+          "when": "view == codelynxExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "codelynx.showApiUsage",
+          "when": "view == codelynxExplorer",
+          "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codelynx-explorer",
+          "title": "CodeLynx",
+          "icon": "assets/icon.png"
+        }
+      ]
+    },
+    "views": {
+      "codelynx-explorer": [
+        {
+          "id": "codelynxExplorer",
+          "name": "CodeLynx AI",
+          "when": "true"
+        }
+      ]
+    },
     "configuration": {
       "title": "CodeLynx",
       "properties": {
@@ -98,10 +142,19 @@
   "dependencies": {
     "@cerebras/cerebras_cloud_sdk": "^1.50.0"
   },
+  "extensionDependencies": [],
+  "extensionKind": [
+    "workspace"
+  ],
   "icon": "assets/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/mohammed-thaha/codelynx"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mohammed-thaha/codelynx/issues"
+  },
+  "homepage": "https://github.com/mohammed-thaha/codelynx#readme",
+  "qna": "marketplace"
 }
