@@ -1,23 +1,73 @@
+# VS Code Extension Bundle Configuration
+
 # Development files
 .vscode/**
 .vscode-test/**
+src/**/*.test.js
 test/**
+**/*.test.js
+**/*.spec.js
+
+# Build artifacts
+node_modules/**
+out/test/**
+.nyc_output/**
+coverage/**
+
+# Documentation (keep only essential)
+CONTRIBUTING.md
+.github/**
+docs/**
+
+# Development tools
+.eslintrc.json
 .gitignore
-.yarnrc
+.gitattributes
+tsconfig.json
+webpack.config.js
+rollup.config.js
 vsc-extension-quickstart.md
 **/jsconfig.json
 **/*.map
 **/eslint.config.mjs
 **/.vscode-test.*
 
-# Documentation files
-**/*.md
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Source maps
+**/*.map
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# IDE files
+.idea/**
+*.swp
+*.swo
+*~
+
+# Package manager files
+.yarnrc
+yarn.lock
+
+# Demo files (too large for extension bundle)
+assets/demo.gif
+assets/demo.mp4
+assets/screenshots/**
+
+# Keep only essential assets and documentation
 !README.md
 !CHANGELOG.md
 !LICENSE.md
-
-# Development dependencies
-node_modules/**
+!assets/icon.png
+!assets/banner.png
 .env*
 **/.DS_Store
 **/*.log
