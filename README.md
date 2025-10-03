@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![CodeLynx Logo](https://raw.githubusercontent.com/Mohammed-Thaha/CodeLynx/blob/main/assets/banner.png)
+![CodeLynx Logo](https://github.com/Mohammed-Thaha/CodeLynx/raw/main/assets/banner.png)
 
 [![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Futuronix.codelynx)
 [![Version](https://img.shields.io/badge/version-1.0.0-green?style=flat-square)](https://github.com/Mohammed-Thaha/CodeLynx)
