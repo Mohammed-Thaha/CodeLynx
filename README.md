@@ -55,7 +55,7 @@
 
 1. **From VS Code Marketplace**
    ```
-   ext install Futuronix.codelynx
+   ext install Codelynx.codelynx
    ```
 
 2. **Manual Installation**
