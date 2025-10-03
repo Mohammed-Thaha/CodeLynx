@@ -1,7 +1,7 @@
 {
   "name": "codelynx",
   "displayName": "CodeLynx - AI Code Assistant",
-  "publisher": "Futuronix",
+  "publisher": "Codelynx",
   "description": "AI-powered code review, explanation, and assistance. Chat with AI about your codebase.",
   "version": "1.0.0",
   "engines": {
