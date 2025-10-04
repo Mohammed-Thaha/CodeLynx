@@ -153,6 +153,24 @@ CodeLynx represents the future of developer productivity, combining:
 
 ---
 
+## 👥 Meet the Team
+
+**CodeLynx** was built by a talented team during the FutureStack GenAI Hackathon 2025:
+
+<div align="center">
+
+| **Mohammed Thaha** | **Karthik Vinod** | **Jaswand** | **Balaji** |
+|:---:|:---:|:---:|:---:|
+|  **Extension Developer** |  **AI Researcher** |  **Documentation Lead** |  **UI/UX Designer** |
+| Led technical development<br/>and VS Code integration | Designed AI interactions<br/>and prompt engineering | Crafted user experience<br/>and project documentation | Created intuitive interface<br/>and user experience |
+| [LinkedIn](https://www.linkedin.com/in/mohammed-thaha-webdev/) | [LinkedIn](https://www.linkedin.com/in/karthik-vinod-0342a0287?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ) | [LinkedIn](https://www.linkedin.com/in/jaswand-s-a3358b295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ) | [LinkedIn](https://www.linkedin.com/in/balaji-a-v-954320295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ) |
+
+</div>
+
+*Our diverse skillsets came together to create an AI assistant that truly understands developers' needs.*
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
