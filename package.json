@@ -3,7 +3,7 @@
   "displayName": "CodeLynx - AI Code Assistant",
   "publisher": "Codelynx",
   "description": "AI-powered code review, explanation, and assistance. Chat with AI about your codebase.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "engines": {
     "vscode": "^1.70.0"
   },

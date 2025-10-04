@@ -5,13 +5,13 @@
 ![CodeLynx Logo](https://codelynx-ai.netlify.app/assets/banner.png)
 
 [![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Futuronix.codelynx)
-[![Version](https://img.shields.io/badge/version-1.0.0-green?style=flat-square)](https://github.com/Mohammed-Thaha/CodeLynx)
+[![Version](https://img.shields.io/badge/version-1.0.4-green?style=flat-square)](https://github.com/Mohammed-Thaha/CodeLynx)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE.md)
 [![FutureStack 2025](https://img.shields.io/badge/FutureStack-GenAI%20Hackathon-ff6b35?style=flat-square)](https://futurestack.dev)
 
 **Next-generation AI-powered code assistant with real-time analysis and intelligent suggestions**
 
-[Install Extension](https://marketplace.visualstudio.com/items?itemName=Futuronix.codelynx) • [Demo](https://github.com/Mohammed-Thaha/CodeLynx#demo) • [Documentation](https://github.com/Mohammed-Thaha/CodeLynx/wiki)
+[Install Extension](https://marketplace.visualstudio.com/items?itemName=Codelynx.codelynx) • [Demo](https://github.com/Mohammed-Thaha/CodeLynx#demo) • [Documentation](https://github.com/Mohammed-Thaha/CodeLynx/wiki)
 
 </div>
 
@@ -19,31 +19,40 @@
 
 ## ✨ Features
 
-### 🤖 **AI-Powered Code Analysis**
-- Real-time code review and suggestions
-- Intelligent error detection and fixes
-- Context-aware code explanations
+### 🤖 **Your AI Coding Companion**
+- Chat naturally with AI about your code - just like talking to a senior developer
+- Get instant explanations for that confusing function you inherited
+- Receive personalized suggestions tailored to your coding style
 
-### 🔍 **Smart Code Assistance**
-- Interactive AI chat for coding questions
-- Multi-language support with advanced models
-- Instant code documentation generation
+### 💬 **Smart Conversations About Code**
+- Ask "What does this function do?" and get clear, human-friendly explanations
+- Upload any file from your workspace and discuss it with AI
+- Switch between different AI personalities for various coding tasks
+- Generate documentation that actually makes sense
 
-### 📊 **Usage Analytics**
-- Real-time API usage tracking
-- Daily request limits and monitoring
-- Performance insights and optimization tips
+### 📊 **Stay in Control of Your Usage**
+- See exactly how much you're using the AI (no surprise bills!)
+- Set daily limits so you don't go overboard
+- Track which models work best for your projects
+- Export your usage data whenever you need it
 
-### 🛡️ **Security & Testing**
-- Automated vulnerability scanning
-- Unit, integration, and security test generation
-- Best practices enforcement
+### 🛠️ **Built for Real Developers**
+- Works seamlessly in VS Code - no context switching needed
+- Lightweight and fast - won't slow down your workflow
+- Your code stays private - only what you choose to share gets analyzed
+- Configure everything the way you like it
+
+### 🚀 **Actually Helpful AI Features**
+- Get unstuck when you're debugging at 2 AM
+- Learn new programming concepts through interactive conversations
+- Optimize your code with AI suggestions that make sense
+- Generate boilerplate code so you can focus on the interesting stuff
 
 ---
 
 ## 🎬 Demo
 
-![CodeLynx Demo](https://raw.githubusercontent.com/Mohammed-Thaha/CodeLynx/main/assets/demo.gif)
+![CodeLynx Demo](https://github.com/Mohammed-Thaha/CodeLynx/blob/main/assets/demo.gif?raw=true)
 
 *CodeLynx in action: AI-powered code assistance with real-time suggestions and analysis*
 
@@ -112,11 +121,19 @@ Ctrl+Shift+P → "CodeLynx: Show API Usage Statistics"
 
 | Setting | Description | Default |
 |---------|-------------|---------|
-| `codelynx.cerebrasApiKey` | Your Cerebras API key | `""` |
-| `codelynx.chatModel` | AI model for conversations | `llama-3.3-70b` |
-| `codelynx.chatTemperature` | Response creativity (0.0-1.0) | `0.7` |
-| `codelynx.apiDailyLimit` | Daily API request limit | `100` |
-| `codelynx.enableTelemetry` | Anonymous usage analytics | `true` |
+| `codelynx.cerebrasApiKey` | Your Cerebras API key for authentication | `""` |
+| `codelynx.defaultModel` | Default AI model for conversations | `"llama3.1-8b"` |
+| `codelynx.temperature` | Response creativity level (0.0-1.0) | `0.7` |
+| `codelynx.maxTokens` | Maximum tokens per API response | `1000` |
+| `codelynx.enableApiRateLimit` | Enable daily API request limiting | `true` |
+| `codelynx.apiRateLimitDaily` | Maximum daily API requests allowed | `100` |
+
+### Advanced Settings
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| `codelynx.timeout` | API request timeout in milliseconds | `30000` |
+| `codelynx.enableLogging` | Enable detailed logging for debugging | `false` |
 
 ---
 
