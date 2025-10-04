@@ -43,7 +43,7 @@
 
 ## 🎬 Demo
 
-![CodeLynx Demo](https://github.com/Mohammed-Thaha/CodeLynx/blob/main/assets/demo.gif)
+![CodeLynx Demo](https://raw.githubusercontent.com/Mohammed-Thaha/CodeLynx/main/assets/demo.gif)
 
 *CodeLynx in action: AI-powered code assistance with real-time suggestions and analysis*
 
