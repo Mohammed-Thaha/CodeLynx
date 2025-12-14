@@ -1,52 +1,37 @@
-# CodeLynx - AI Code Assistant
+# CodeLynx — AI Code Assistant
 
-<div align="center">
 
-![CodeLynx Logo](https://codelynx-ai.netlify.app/assets/banner.png)
 
-[![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Marketplace-blue?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=Futuronix.codelynx)
-[![Version](https://img.shields.io/badge/version-1.0.4-green?style=flat-square)](https://github.com/Mohammed-Thaha/CodeLynx)
-[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE.md)
-[![FutureStack 2025](https://img.shields.io/badge/FutureStack-GenAI%20Hackathon-ff6b35?style=flat-square)](https://futurestack.dev)
+![CodeLynx Banner](https://codelynx-ai.netlify.app/assets/banner.png)
 
-**Next-generation AI-powered code assistant with real-time analysis and intelligent suggestions**
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Futuronix.codelynx) •
+[GitHub](https://github.com/Mohammed-Thaha/CodeLynx) •
+[Demo](https://github.com/Mohammed-Thaha/CodeLynx#demo)
 
-[Install Extension](https://marketplace.visualstudio.com/items?itemName=Codelynx.codelynx) • [Demo](https://github.com/Mohammed-Thaha/CodeLynx#demo) • [Documentation](https://github.com/Mohammed-Thaha/CodeLynx/wiki)
+**Next-generation AI-powered VS Code assistant for real-time code understanding and productivity**
 
 </div>
 
 ---
 
+## 🚀 Overview
+
+**CodeLynx** is an AI-powered VS Code extension designed to help developers analyze, understand, and improve code directly inside their editor.
+It enables natural conversations about code, intelligent suggestions, and real-time insights without interrupting the development workflow.
+
+Built during **FutureStack GenAI Hackathon 2025** with a strong focus on performance, usability, and developer privacy.
+
+---
+
 ## ✨ Features
 
-### 🤖 **Your AI Coding Companion**
-- Chat naturally with AI about your code - just like talking to a senior developer
-- Get instant explanations for that confusing function you inherited
-- Receive personalized suggestions tailored to your coding style
-
-### 💬 **Smart Conversations About Code**
-- Ask "What does this function do?" and get clear, human-friendly explanations
-- Upload any file from your workspace and discuss it with AI
-- Switch between different AI personalities for various coding tasks
-- Generate documentation that actually makes sense
-
-### 📊 **Stay in Control of Your Usage**
-- See exactly how much you're using the AI (no surprise bills!)
-- Set daily limits so you don't go overboard
-- Track which models work best for your projects
-- Export your usage data whenever you need it
-
-### 🛠️ **Built for Real Developers**
-- Works seamlessly in VS Code - no context switching needed
-- Lightweight and fast - won't slow down your workflow
-- Your code stays private - only what you choose to share gets analyzed
-- Configure everything the way you like it
-
-### 🚀 **Actually Helpful AI Features**
-- Get unstuck when you're debugging at 2 AM
-- Learn new programming concepts through interactive conversations
-- Optimize your code with AI suggestions that make sense
-- Generate boilerplate code so you can focus on the interesting stuff
+* AI-powered chat for code explanations, debugging, and optimization
+* Workspace file analysis and contextual understanding
+* Automated code review and vulnerability detection
+* Test case and documentation generation
+* API usage monitoring with daily limits
+* Lightweight, fast, and editor-native experience
+* Privacy-first design with user-controlled data sharing
 
 ---
 
@@ -54,163 +39,78 @@
 
 ![CodeLynx Demo](https://github.com/Mohammed-Thaha/CodeLynx/blob/main/assets/demo.gif?raw=true)
 
-*CodeLynx in action: AI-powered code assistance with real-time suggestions and analysis*
-
 ---
 
-## 🚀 Quick Start
+## ⚡ Quick Start
 
 ### Installation
 
-1. **From VS Code Marketplace**
-   ```
-   ext install Codelynx.codelynx
-   ```
+```bash
+ext install Codelynx.codelynx
+```
 
-2. **Manual Installation**
-   - Download the latest `.vsix` file from [Releases](https://github.com/Mohammed-Thaha/CodeLynx/releases)
-   - Open VS Code → Extensions → Install from VSIX
-
-### Setup
-
-1. **Get your Cerebras API key**
-   - Visit [Cerebras Inference](https://inference.cerebras.ai/)
-   - Sign up for free access
-   - Copy your API key
-
-2. **Configure CodeLynx**
-   - Open VS Code Settings (`Ctrl+,`)
-   - Search for "CodeLynx"
-   - Paste your API key in `codelynx.cerebrasApiKey`
-
-3. **Start coding with AI**
-   - Open Command Palette (`Ctrl+Shift+P`)
-   - Run `CodeLynx: Open AI Chat`
-   - Ask questions about your code!
+Or install directly from the **VS Code Marketplace**.
 
 ---
 
-## 💡 Usage
+### Setup
 
-### AI Chat Assistant
-```
-Ctrl+Shift+P → "CodeLynx: Open AI Chat"
-```
-- Ask questions about your code
-- Get explanations for complex functions
-- Request optimization suggestions
-- Generate documentation
+1. Get a **Cerebras API Key** from [https://inference.cerebras.ai](https://inference.cerebras.ai)
+2. Open **VS Code → Settings → CodeLynx**
+3. Add your API key
+4. Start using CodeLynx from the Command Palette
 
-### API Usage Statistics
+```text
+Ctrl + Shift + P → CodeLynx: Open AI Chat
 ```
-Ctrl+Shift+P → "CodeLynx: Show API Usage Statistics"
-```
-- Monitor your daily API usage
-- Track token consumption
-- View model usage distribution
-- Export usage data
 
-### Code Analysis
-- **Vulnerability Scanning**: Detect security issues automatically
-- **Test Generation**: Create comprehensive test suites
-- **Code Review**: Get AI-powered code quality insights
+---
+
+## 🛠 Usage
+
+* Ask questions about your code in natural language
+* Analyze files from your workspace
+* Generate tests and documentation
+* Identify security issues and code quality problems
+* Track and export AI usage statistics
 
 ---
 
 ## ⚙️ Configuration
 
-| Setting | Description | Default |
-|---------|-------------|---------|
-| `codelynx.cerebrasApiKey` | Your Cerebras API key for authentication | `""` |
-| `codelynx.defaultModel` | Default AI model for conversations | `"llama3.1-8b"` |
-| `codelynx.temperature` | Response creativity level (0.0-1.0) | `0.7` |
-| `codelynx.maxTokens` | Maximum tokens per API response | `1000` |
-| `codelynx.enableApiRateLimit` | Enable daily API request limiting | `true` |
-| `codelynx.apiRateLimitDaily` | Maximum daily API requests allowed | `100` |
-
-### Advanced Settings
-
-| Setting | Description | Default |
-|---------|-------------|---------|
-| `codelynx.timeout` | API request timeout in milliseconds | `30000` |
-| `codelynx.enableLogging` | Enable detailed logging for debugging | `false` |
+* `codelynx.cerebrasApiKey` – API key for authentication
+* `codelynx.defaultModel` – Default AI model
+* `codelynx.enableApiRateLimit` – Enable usage limits
+* `codelynx.apiRateLimitDaily` – Daily request cap
 
 ---
 
-## 🏗️ Built for FutureStack GenAI Hackathon 2025
+## 🏗 Technology Stack
 
-CodeLynx represents the future of developer productivity, combining:
-- **Cutting-edge AI models** from Cerebras
-- **Seamless VS Code integration**
-- **Real-time code intelligence**
-- **Privacy-first approach**
-
-### Tech Stack
-- **Frontend**: VS Code Extension API, HTML/CSS/JavaScript
-- **Backend**: Node.js, Cerebras AI SDK
-- **AI Models**: Llama 3.3, GPT-OSS, Qwen-3
-- **Storage**: VS Code GlobalState API
+* VS Code Extension API
+* Node.js
+* Cerebras AI Inference
+* Llama, Qwen, GPT-OSS models
 
 ---
 
-## 👥 Meet the Team
-
-**CodeLynx** was built by a talented team during the FutureStack GenAI Hackathon 2025:
-
-<div align="center">
-
-| **Mohammed Thaha** | **Karthik Vinod** | **Jaswand** | **Balaji** |
-|:---:|:---:|:---:|:---:|
-|  **Extension Developer** |  **AI Researcher** |  **Documentation Lead** |  **UI/UX Designer** |
-| Led technical development<br/>and VS Code integration | Designed AI interactions<br/>and prompt engineering | Crafted user experience<br/>and project documentation | Created intuitive interface<br/>and user experience |
-| [LinkedIn](https://www.linkedin.com/in/mohammed-thaha-webdev/) | [LinkedIn](https://www.linkedin.com/in/karthik-vinod-0342a0287?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ) | [LinkedIn](https://www.linkedin.com/in/jaswand-s-a3358b295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ) | [LinkedIn](https://www.linkedin.com/in/balaji-a-v-954320295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ) |
-
-</div>
-
-*Our diverse skillsets came together to create an AI assistant that truly understands developers' needs.*
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Setup
-```bash
-# Clone the repository
-git clone https://github.com/Mohammed-Thaha/CodeLynx.git
-cd CodeLynx
-
-# Install dependencies
-npm install
-
-# Open in VS Code
-code .
-
-# Press F5 to run the extension in a new Extension Development Host window
-```
+| Team Member | Area of Responsibility |
+| :--- | :--- |
+| **Mohammed Thaha** (Team Lead) | **VS Code Developer & AI Integration** |
+| **Karthik Vinod** | **AI Prompt Engineering** |
+| **Jaswand** | **Web Site & Content** |
+| **Balaji** | **Video Editing & Logo** |
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+MIT License
 
 ---
-
-## 🌟 Acknowledgments
-
-- **Cerebras Systems** for providing powerful AI inference capabilities
-- **FutureStack Team** for organizing the GenAI Hackathon 2025
-- **VS Code Team** for the excellent extension platform
-- **Open Source Community** for inspiration and support
-
----
-
-<div align="center">
 
 **Built with ❤️ for the developer community**
 
-[⬆ Back to top](#codelynx---ai-code-assistant)
+⬆ Back to top
 
-</div>
+Just tell me 🚀
